@@ -13,8 +13,8 @@ class Header extends Component {
         return (
             <nav className="d-flex justify-content-between align-items-center" style={header}>
                 <div>EMPLOYEE MANAGEMENT</div>
-                <form className="form-inline w-50">
-                    <div className="input-group">
+                <form className="form-inline w-50 justify-content-center">
+                    <div className="input-group w-50">
                         <input type="search" className="form-control p-1 h-25 text-center" placeholder="Rechercher compte" />
                         <div className="input-group-append">
                             <button className="input-group-text btn p-1" type="submit">

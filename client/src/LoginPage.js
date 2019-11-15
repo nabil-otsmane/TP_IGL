@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './LoginPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import {Button, Media} from 'react-bootstrap';
 
 class LoginPage extends Component{
@@ -24,7 +26,7 @@ class LoginPage extends Component{
                     <input className="input100" type="text " name="email" placeholder="E-mail"/>
                     <span className="focus-input100"/>
                     <span className="symbol-input100">
-                      <i className="fa fa-envelope"/>
+                      <FontAwesomeIcon icon={faEnvelope} />
                     </span>
                 </div>
                 <div className="p-t-20"/>
@@ -32,12 +34,12 @@ class LoginPage extends Component{
                     <input className="input100" type="password" name="pass" placeholder="Password"/>
                     <span className="focus-input100"/>
                     <span className="symbol-input100">
-                      <i className="fa fa-lock"/>
+                      <FontAwesomeIcon icon={faLock} />
                     </span>
                 </div>
              
                 <div className="container-login100-form-btn" >
-                <Button className="login100-form-btn" variant="outline-secondary">Login</Button>
+                  <Button className="login100-form-btn" variant="outline-secondary">Login</Button>
                 </div>
 
                 <div className="p-t-136"/>

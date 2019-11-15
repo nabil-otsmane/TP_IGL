@@ -7,7 +7,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div className="row w-100">
+            <div className="row h-100 w-100">
                 <div className="col-auto bg-dark">
 
                 </div>
@@ -19,3 +19,5 @@ class Main extends Component {
         );
     }
 }
+
+export default Main;

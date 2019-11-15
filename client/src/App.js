@@ -1,23 +1,20 @@
 import React ,{Component} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Container, Row, Col} from 'react-bootstrap';
+import LoginPage from './LoginPage';
+import Main from './mainPage';
 
 class App extends Component {
+
+  loggedIn = true;  // we'll retreive this from the backend
+
   render(){
     return (
       <div className ="App" >
-          <Container>
-            <Row>
-              <Col>1 of 2</Col>
-              <Col>2 of 2</Col>
-            </Row>
-            <Row>
-              <Col>1 of 3</Col>
-              <Col>2 of 3</Col>
-              <Col>3 of 3</Col>
-            </Row>
-        </Container>
+        {this.loggedIn?
+          <Main />:
+          <LoginPage />
+        }
       </div>
     );
   }

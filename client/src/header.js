@@ -13,11 +13,11 @@ class Header extends Component {
         return (
             <nav className="d-flex justify-content-between align-items-center" style={header}>
                 <div>EMPLOYEE MANAGEMENT</div>
-                <form className="form-inline">
+                <form className="form-inline w-50">
                     <div className="input-group">
                         <input type="search" className="form-control p-1 h-25 text-center" placeholder="Rechercher compte" />
                         <div className="input-group-append">
-                            <button className="input-group-text btn btn-light p-1" type="submit">
+                            <button className="input-group-text btn p-1" type="submit">
                                 <FontAwesomeIcon icon={faSearch} color="#1d2a48" />
                             </button>
                         </div>

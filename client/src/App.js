@@ -1,21 +1,25 @@
-import React from 'react';
+import React ,{Component} from 'react';
 import './App.css';
-import Header from './header';
-import Table from './table';
+import {Container, Row, Col} from 'react-bootstrap';
 
-function App() {
-
-  return (
-    <div className="row w-100">
-      <div className="col-auto bg-dark">
-
+class App extends Component {
+  render(){
+    return (
+      <div className ="App" >
+          <Container>
+            <Row>
+              <Col>1 of 2</Col>
+              <Col>2 of 2</Col>
+            </Row>
+            <Row>
+              <Col>1 of 3</Col>
+              <Col>2 of 3</Col>
+              <Col>3 of 3</Col>
+            </Row>
+        </Container>
       </div>
-      <div className="col p-4">
-        <Header />
-        <Table />
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

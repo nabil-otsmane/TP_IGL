@@ -20,3 +20,9 @@
 .App-link {
   color: #09d3ac;
 }
+
+.btn-add {
+  border-radius: 0 !important;
+  background-color: #a61f67 !important;
+  border-color: #a61f67 !important;
+}

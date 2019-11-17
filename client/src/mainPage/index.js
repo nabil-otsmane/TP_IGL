@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Header from './header';
 import Table from './table';
-
+import SideBar from './sideBar';
 
 class Main extends Component {
 
     render() {
-        return (
-            <div className="row h-100 w-100">
-                <div className="col-auto bg-dark">
 
+        return (
+            <div className="row h-100 m-0">
+                <div className="col-auto bg-dark p-0">
+                    <SideBar />
                 </div>
                 <div className="col p-4">
                     <Header />

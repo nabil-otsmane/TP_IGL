@@ -142,10 +142,15 @@ class Table extends Component {
             order: 'asc',
           }];
 
+          var Height = {
+            position: "relative",
+            bottom: 0
+          };
+
 
         return (
             <div className="mt-4 bg-light w-100">
-              <div className="sticky-top bg-light" style={{height: 60}}>
+              <div className="d-flex bg-light" style={{height: 60}}>
                 <button className="btn btn-primary btn-add m-3 p-0 pl-2 pr-2 float-left">
                     <small>ADD ENSEIGNANT</small>
                 </button>
@@ -161,7 +166,7 @@ class Table extends Component {
                 <FontAwesomeIcon icon={faSortAlphaDownAlt} color="#1d2a48" />
                 </button>
               </div>
-              <div className="text-left">
+              <div className="text-left overflow-auto" style={Height}>
                 <BootstrapTable bootstrap4 keyField='id' data={ products }
                             striped hover columns={ columns } 
                             defaultSorted={ defaultSorted } bordered={ false } />

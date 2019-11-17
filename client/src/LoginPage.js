@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import logo from './images/img.png';
 import './LoginPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import {Button, Media} from 'react-bootstrap';
+import {Media} from 'react-bootstrap';
 
 class LoginPage extends Component{
   render(){
@@ -39,7 +39,7 @@ class LoginPage extends Component{
                 </div>
              
                 <div className="container-login100-form-btn" >
-                  <Button className="login100-form-btn" variant="outline-secondary">Login</Button>
+                <button className="login100-form-btn" variant="outline-secondary">Login</button>
                 </div>
 
                 <div className="p-t-136"/>

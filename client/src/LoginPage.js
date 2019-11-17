@@ -39,7 +39,7 @@ class LoginPage extends Component{
                 </div>
              
                 <div className="container-login100-form-btn" >
-                <Button className="login100-form-btn" variant="outline-secondary">Login</Button>
+                <button className="login100-form-btn" variant="outline-secondary">Login</button>
                 </div>
 
                 <div className="p-t-136"/>

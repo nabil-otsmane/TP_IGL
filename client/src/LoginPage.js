@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
+import logo from './images/img.png';
 import './LoginPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import {Button, Media} from 'react-bootstrap';
+import {Media} from 'react-bootstrap';
 
 class LoginPage extends Component{
   render(){

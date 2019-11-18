@@ -6,13 +6,9 @@ import { faUserCog, faBell, faSignOutAlt, faSearch } from '@fortawesome/free-sol
 class Header extends Component {
     render() {
 
-        let header = {
-            height: 30,
-        };
-
         return (
-            <nav className="d-flex justify-content-between align-items-center" style={header}>
-                <div>EMPLOYEE MANAGEMENT</div>
+            <nav className="d-flex justify-content-between align-items-center header">
+            <div>GESTION DES {this.props.type.toUpperCase()}</div>
                 <form className="form-inline w-50 justify-content-center">
                     <div className="input-group w-50">
                         <input type="search" className="form-control p-1 h-25 text-center" placeholder="Rechercher compte" />

@@ -182,7 +182,7 @@ class Table extends Component {
                                 </div> 
       
                                 <div className="wrap-input100 validate-input"  >
-                                    <input className="input100" type="number" name="NSSProf" placeholder="Social Security Number"/>
+                                    <input className="input100" type="tel" name="NSSProf" placeholder="Social Security Number"/>
                                     <span className="focus-input100"/>
                                     <span className="symbol-input100">
                                       <FontAwesomeIcon icon={faLock} color="#1d2a48" size="sm" />   
@@ -237,7 +237,11 @@ class Table extends Component {
               </div>
             </div>
         );
+        function VerifyForm() {
+           
+        }
     }
+
 }
 
 export default Table;

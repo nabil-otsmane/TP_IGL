@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faTag, faSortAlphaDownAlt } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faTag, faSortAlphaDownAlt, faBook, faLock, faCalendar, faEnvelopeOpenText, faNewspaper } from '@fortawesome/free-solid-svg-icons';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 class Table extends Component {
     render() {
@@ -142,13 +143,77 @@ class Table extends Component {
             order: 'asc',
           }];
 
+          const win = this.props.type;
 
+          const poppe = (
+            <Popover id="popOver" >
+                      <Popover.Title as="h1">
+                          Please Fill this Form
+                      </Popover.Title>
+                      <Popover.Content>
+                            <form style={{margin:"10px"}}>
+      
+                                <div className="wrap-input100 validate-input" data-validate = "Valid Family Name is required" >
+                                  <input className="input100" type="text" name="familyNameProf" placeholder="Family Name"/>
+                                  <span className="focus-input100"/>
+                                   <span className="symbol-input100">
+                                      <FontAwesomeIcon icon={faNewspaper} color="#1d2a48" size="sm" />   
+                                    </span>
+                               </div>
+      
+                                <div className="wrap-input100 validate-input" data-validate = "Valid first Na1me is required" >
+                                    <input className="input100" type="text" name="firstNameProf" placeholder="First Name"/>
+                                    <span className="focus-input100"/>
+                                    <span className="symbol-input100">
+                                      <FontAwesomeIcon icon={faEnvelopeOpenText} color="#1d2a48" size="sm" />   
+                                      </span>
+                                </div> 
+      
+                                <div className="wrap-input100 validate-input"  >
+                                    <input className="input100" type="number" min="20" max="50" name="ageProf" placeholder="Age"/>
+                                    <span className="focus-input100"/>
+                                    <span className="symbol-input100">
+                                      <FontAwesomeIcon icon={faCalendar} color="#1d2a48" size="sm" />   
+                                      </span>
+                                </div> 
+      
+                                <div className="wrap-input100 validate-input"  >
+                                    <input className="input100" type="number" name="NSSProf" placeholder="Social Security Number"/>
+                                    <span className="focus-input100"/>
+                                    <span className="symbol-input100">
+                                      <FontAwesomeIcon icon={faLock} color="#1d2a48" size="sm" />   
+                                      </span>
+                                </div> 
+      
+                                <div className="wrap-input100 validate-input"  >
+                                  <select className="input100">
+                                      <option>Algorithmique</option>
+                                      <option>Mathematique</option>
+                                      <option>Autre</option>
+                                  </select>
+                                    <span className="focus-input100"/>
+                                    <span className="symbol-input100">
+                                      <FontAwesomeIcon icon={faBook} color="#1d2a48" size="sm" />         
+                                      </span>
+                                </div> 
+            
+                                <button className="login100-form-btn" onClick ={
+                                  console.log("Validate")
+                                }>
+                                  Validate
+                                </button>
+      
+                            </form>
+                      </Popover.Content>
+          </Popover>   );
         return (
             <div className="mt-4 bg-light w-100">
               <div className="d-flex bg-light" style={{height: 60}}>
+                <OverlayTrigger trigger="click" placement="right" overlay={poppe}>
                 <button className="btn m-3 p-0 pl-2 pr-2 float-left btn-voilet">
-                    <small>ADD ENSEIGNANT</small>
+                    <small>ADD {win.toUpperCase().slice(0, win.length-1)}</small>
                 </button>
+                </OverlayTrigger>
                 <button className="btn float-left mt-2">
                     <FontAwesomeIcon icon={faFilter} color="#1d2a48" size="sm" />
                 </button>

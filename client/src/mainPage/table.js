@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTag, faSortAlphaDownAlt, faBook, faLock, faCalendar, faEnvelopeOpenText, faNewspaper } from '@fortawesome/free-solid-svg-icons';
-//import '../../node_modules/font-awesome/css/font-awesome.min.css';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 class Table extends Component {
@@ -24,7 +23,7 @@ class Table extends Component {
           const products = [
             {
               id:0,
-              name:"hello",
+              name:"hell",
               price:"hello2"
             },
             {
@@ -144,10 +143,7 @@ class Table extends Component {
             order: 'asc',
           }];
 
-          var Height = {
-            position: "relative",
-            bottom: 0
-          };
+          const win = this.props.type;
 
           const poppe = (
             <Popover id="popOver" >
@@ -214,8 +210,8 @@ class Table extends Component {
             <div className="mt-4 bg-light w-100">
               <div className="d-flex bg-light" style={{height: 60}}>
                 <OverlayTrigger trigger="click" placement="right" overlay={poppe}>
-                <button className="btn btn-primary btn-add m-3 p-0 pl-2 pr-2 float-left">
-                    <small>ADD ENSEIGNANT</small>
+                <button className="btn m-3 p-0 pl-2 pr-2 float-left btn-voilet">
+                    <small>ADD {win.toUpperCase().slice(0, win.length-1)}</small>
                 </button>
                 </OverlayTrigger>
                 <button className="btn float-left mt-2">
@@ -230,7 +226,7 @@ class Table extends Component {
                 <FontAwesomeIcon icon={faSortAlphaDownAlt} color="#1d2a48" />
                 </button>
               </div>
-              <div className="text-left overflow-auto" style={Height}>
+              <div className="text-left overflow-auto">
                 <BootstrapTable bootstrap4 keyField='id' data={ products }
                             striped hover columns={ columns } 
                             defaultSorted={ defaultSorted } bordered={ false } />

@@ -1,0 +1,45 @@
+.sideBarStyle {
+    height: 100%;
+    background-color: #1d2a4f;
+}
+
+.btn-voilet {
+    background-color: blueviolet !important;
+    color: white !important;
+    border-radius: 0 !important;
+}
+
+.header {
+    height: 30px;
+}
+
+.bar {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: blueviolet;
+}
+
+.btnSelected {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.btnSelected::after {
+    position: absolute;
+    top:0;
+    right: 0;
+    bottom: 0;
+    width: 0; 
+    height: 0; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+      
+    border-left: 60px solid green;
+}
+
+button {
+    outline: transparent !important;
+}

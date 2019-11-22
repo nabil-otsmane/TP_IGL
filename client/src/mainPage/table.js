@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTag, faSortAlphaDownAlt, faBook, faLock, faCalendar, faEnvelopeOpenText, faNewspaper, faAddressBook } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
-class Table extends Component {
+class Table extends Component {   /** The main Page where the admin can see and add Ensgants and Etudiants*/
     render() {
 
         const columns = [
@@ -145,7 +145,7 @@ class Table extends Component {
 
           const win = this.props.type;
 
-          const popEnseignant = (
+          const popEnseignant = (     /** This returns a Form to add a new Enseignant */
             <Popover id="popOver" >
                       <Popover.Title as="h1">
                           Please Fill this Form
@@ -209,7 +209,7 @@ class Table extends Component {
           </Popover>   );
 
 
-          const popEtudiant = (
+          const popEtudiant = (  /** This returns a Form to add a new Etudiant */
             <Popover id="popOver" >
                       <Popover.Title as="h1">
                           Please Fill this Form

@@ -6,7 +6,7 @@ import Main from './mainPage';
 
 class App extends Component {
 
-  loggedIn = true;  // we'll retreive this from the backend
+  loggedIn = false;  // we'll retreive this from the backend
 
   render(){
     return (

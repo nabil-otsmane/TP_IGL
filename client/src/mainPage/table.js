@@ -188,8 +188,8 @@ class Table extends Component {
                     </div>  
                 </div>
             );
-                                }
+    }
 
-                            }
+}
 
-                            export default Table;
+export default Table;

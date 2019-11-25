@@ -10,10 +10,10 @@ var app = express();
 
 var auth = require("./auth");
 
-app.use('/', auth);
+app.use('*', auth);
 
 Object.values(routes).forEach(element => {
-    app.use('/api/etudiants/', element);
+    app.use('/api/etudiant/', element);
 });
 
 

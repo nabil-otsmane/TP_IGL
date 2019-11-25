@@ -1,14 +1,18 @@
 var express = require("express");
-var mongoose = require("mongoose");
+var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
 var dotenv = require("dotenv");
 
 dotenv.config();
 
+require("./db");
 var routes = require("./routes");
+var auth = require("./auth");
 
 var app = express();
 
-var auth = require("./auth");
+app.use(cookieParser());
+app.use(bodyParser.json());
 
 app.use('*', auth);
 

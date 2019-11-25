@@ -3,6 +3,13 @@ var axios = require("axios");
 
 function isAuthenticated(cookie) {
 
+    return {
+        then: function(e){
+            e({isAuth: true});
+            return {catch: function(){}}
+        }
+    };
+
     return axios.post(process.env.AUTH_IP+":"+process.env.AUTH_PORT+"/isAuth", {
         cookie
     }).then(res => res.json())

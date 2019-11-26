@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTag, faSortAlphaDownAlt,faBook, faLock, faCalendar, faEnvelopeOpenText, faNewspaper, faAddressBook } from '@fortawesome/free-solid-svg-icons';
-import { OverlayTrigger, Alert } from 'react-bootstrap';
+import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
+import axios from 'axios'
 
 /** The main Page where the admin can see and add Ensgants and Etudiants*/
 class Table extends Component {
@@ -14,16 +15,50 @@ class Table extends Component {
       this.props=props;
       this.ValidateProfClicked = this.ValidateProfClicked.bind(this);
       this.ValidateEtudiantClicked= this.ValidateEtudiantClicked.bind(this);
+      this.GetEmailprof = this.GetEmailprof.bind(this);
+      this.GetPasswordprof = this.GetPasswordprof.bind(this);
+      this.state = {
+          dataPresent : false,
+          columns : [],
+          users :[]
+      }
+    }
+     GetEmailprof ()
+    {
+        var {FamilyNameProf, FirstNameProf} = this.refs;
+        var email = FamilyNameProf.value[0]+"_"+FirstNameProf.value+"@esi.dz";
+        return email;
     }
 
-    ValidateProfClicked(s)
+    GetPasswordprof ()
     {
-        var {FamilyNameProf, FirstNameProf,AgeProf,NSSProf} =this.refs;
+        var {FamilyNameProf, FirstNameProf} = this.refs;
+        var password = FamilyNameProf.value[0]+"_"+FirstNameProf.value;
+        return password;
+    }
+
+
+    ValidateProfClicked(e)
+    {
+        e.preventDefault();
+        var {FamilyNameProf, FirstNameProf,AgeProf,NSSProf,specialiteProf} =this.refs;
         if (/[A-Za-z]{3,20}/.test(FamilyNameProf.value)
              &&  /[A-Za-z]{1,25}[A-Za-z]{1,25}?/.test(FirstNameProf.value) 
              &&  /[0-9]{2}/.test(AgeProf.value) && AgeProf.value >=20 && AgeProf.value<=50
              &&  /[1-9][0-9]{12}/.test(NSSProf.value) 
-             )  console.log("ACCEPted");
+             )  
+             {
+                 axios.post("http://192.168.43.185:3501/api/enseignant/add",
+                 {
+                         nom: FamilyNameProf.value,
+                         prenom: FirstNameProf.value,
+                         email: this.GetEmailprof (),
+                         password: this.GetPasswordprof (),
+                         specialite: specialiteProf.value,
+                         nss: NSSProf.value, 
+                 }
+                 ).then(data => console.log(data));
+             }
         else
         {
             console.log("not Accepted");
@@ -41,7 +76,21 @@ class Table extends Component {
             && //Date de naiussance 
             /[1-3]CP?S?\d/.test(NiveauEtudiant.value) 
             && /[0-9]{13}/.test(MatEtudiant.value)
-        )console.log("Accepted");
+        )
+        {
+            axios.post("http://192.168.43.185:3500/api/etudiant/add",
+                 {
+                         login : "amine@esi.dz" ,
+                         nom: FamilyNameEtudiant.value,
+                         prenom: FirstNameEtudiant.value,
+                         email: this.GetEmailprof (),
+                         password: this.GetPasswordprof (),
+                         groupe: NiveauEtudiant.value,
+                         matricule: MatEtudiant.value, 
+                         date_naissance: DateNaissanceEtudiant
+                 }
+                 ).then(data => console.log(data));
+        }
         
         else{
             console.log(DateNaissanceEtudiant.value);
@@ -49,8 +98,48 @@ class Table extends Component {
 
     }
 
-    render() {
+    GetEntriesBDD (s)
+    {
+        function acceptable (e)
+        {
+            return (e!=="__v" && e!=="_id")
+        }
+        axios.post("http://192.168.43.185:3501/api/"+s+"/get").then(data => {this.setState(
+            {
+                columns: Object.keys(data.data[0]).filter(acceptable).map(e=>
+                    {  return {
+                        dataField : e,
+                        text: e,
+                        sort :true
+                    }}
+                ), 
+                users : Object.values(data.data).map (e=>{
+                    return {
+                        nss: e.nss,
+                        _id:e._id,
+                        nom:e.nom,
+                        login: e.login,
+                        prenom: e.prenom,
+                        email:e.email,
+                        password :e.password,
+                        specialite :e.specialite,
 
+                    }    
+                }),
+                dataPresent:true
+
+            }
+        )
+            console.log (data.data)
+        });
+    }
+
+    componentDidMount()
+    {
+        this.GetEntriesBDD(this.props.type.slice(0,this.props.type.length-1));
+    }
+
+    render() {
             const popEnseignant = (
                 <Popover id = "popOver" >    
             <Popover.Title as="h1" >
@@ -135,7 +224,7 @@ class Table extends Component {
                     </div> 
     
                     <div className = "wrap-input100 validate-input" >
-                        <select className = "input100" >
+                        <select className = "input100" ref="specialiteProf" >
                             <option > Algorithmique </option> 
                             <option > Mathematique </option> 
                             <option > Autre </option> 
@@ -263,135 +352,6 @@ class Table extends Component {
             </Popover>
             );
 
-            const columns = [{
-                dataField: 'id',
-                text: 'Product ID',
-                sort: true
-            }, {
-                dataField: 'name',
-                text: 'Product Name'
-            }, {
-                dataField: 'price',
-                text: 'Product Price'
-            }];
-
-            const products = [{
-                    id: 0,
-                    name: "hell",
-                    price: "hello2"
-                },
-                {
-                    id: 1,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 2,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 3,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 4,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 5,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 6,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 7,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 8,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 9,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 10,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 11,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 12,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 13,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 14,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 15,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 16,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 17,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 18,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 19,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 20,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 21,
-                    name: "hello",
-                    price: "hello2"
-                },
-                {
-                    id: 22,
-                    name: "hello",
-                    price: "hello2"
-                }
-            ];
-
             const defaultSorted = [{
                 dataField: 'id',
                 order: 'asc',
@@ -431,14 +391,20 @@ class Table extends Component {
                             color = "#1d2a48" />
                         </button>  
                     </div>  
-                    <div className = "text-left overflow-auto" >
+                    {
+                        this.state.dataPresent  && (
+                            <div className = "text-left overflow-auto" >
                         <BootstrapTable bootstrap4 keyField = 'id'
-                            data = { products }
-                            striped hover columns = { columns }
+                            data = { this.state.users }
+                            striped hover columns = { this.state.columns }
                             defaultSorted = { defaultSorted }
                             bordered = { false }
                             />  
-                    </div>  
+                    </div>
+                        )
+                    }
+                      
+                    
                 </div>
             );
     }

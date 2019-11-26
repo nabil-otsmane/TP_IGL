@@ -12,7 +12,7 @@ class Table extends Component {
     constructor(props)
     {
       super(props);
-      this.props=props;
+      
       this.ValidateProfClicked = this.ValidateProfClicked.bind(this);
       this.ValidateEtudiantClicked= this.ValidateEtudiantClicked.bind(this);
       this.GetEmailprof = this.GetEmailprof.bind(this);
@@ -66,9 +66,9 @@ class Table extends Component {
         
     }
 
-    ValidateEtudiantClicked ()
+    ValidateEtudiantClicked (e)
     {
-
+        e.preventDefault();
         var {FamilyNameEtudiant,FirstNameEtudiant,DateNaissanceEtudiant,NiveauEtudiant,MatEtudiant}= this.refs;
         if(
             /[A-Za-z]{3,20}/.test(FamilyNameEtudiant.value)
@@ -100,30 +100,30 @@ class Table extends Component {
 
     GetEntriesBDD (s)
     {
-        function acceptable (e)
-        {
-            return (e!=="__v" && e!=="_id")
-        }
+        this.setState({
+            dataPresent: false
+        });
         axios.post("http://192.168.43.185:3501/api/"+s+"/get").then(data => {this.setState(
             {
-                columns: Object.keys(data.data[0]).filter(acceptable).map(e=>
+                columns: Object.keys(data.data[0])
+                .filter(e => e!=="__v" && e!=="_id")
+                .map(e=>
                     {  return {
                         dataField : e,
                         text: e,
                         sort :true
                     }}
                 ), 
-                users : Object.values(data.data).map (e=>{
+                users : Object.values(data.data).map (e=> {
                     return {
                         nss: e.nss,
-                        _id:e._id,
-                        nom:e.nom,
+                        id: e._id,
+                        nom: e.nom,
                         login: e.login,
                         prenom: e.prenom,
-                        email:e.email,
-                        password :e.password,
-                        specialite :e.specialite,
-
+                        email: e.email,
+                        password: e.password,
+                        specialite: e.specialite,
                     }    
                 }),
                 dataPresent:true
@@ -140,8 +140,9 @@ class Table extends Component {
     }
 
     render() {
-            const popEnseignant = (
-                <Popover id = "popOver" >    
+
+        const popEnseignant = (
+             <Popover id = "popOver" >    
             <Popover.Title as="h1" >
                 Please Fill this Form 
             </Popover.Title> 
@@ -394,13 +395,13 @@ class Table extends Component {
                     {
                         this.state.dataPresent  && (
                             <div className = "text-left overflow-auto" >
-                        <BootstrapTable bootstrap4 keyField = 'id'
-                            data = { this.state.users }
-                            striped hover columns = { this.state.columns }
-                            defaultSorted = { defaultSorted }
-                            bordered = { false }
-                            />  
-                    </div>
+                                <BootstrapTable bootstrap4 keyField = 'id'
+                                    data = { this.state.users }
+                                    striped hover columns = { this.state.columns }
+                                    defaultSorted = { defaultSorted }
+                                    bordered = { false }
+                                    />  
+                            </div>
                         )
                     }
                       

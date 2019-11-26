@@ -1,26 +1,21 @@
 var router = require("express").Router();
 var axios = require("axios");
 
-function isAuthenticated(Cookie) {
-
-    return {
-        then: function(e){
-            e({isAuth: true});
-            return {catch: function(){}}
-        }
-    };
-
-    return axios.post("localhost:"+process.env.AUTH_PORT+"/isAuth", {
+function isAuthenticated(cookie) {
+    
+    return axios.request({
+        url: "http://localhost:"+process.env.AUTH_PORT+"/isAuth",
+        method: "post",
         headers: {
-            Cookie
+            Cookie: cookie
         }
-    }).then(res => res.json())
+    });
 }
 
 router.post("*", (req, res, next) => {
-    isAuthenticated(req.cookies)
-    .then(json => {
-        if(!json.isAuth)
+    isAuthenticated(req.headers.cookie)
+    .then(data => {
+        if(!data.data.isAuth)
         {
             res.json({type: "error", msg: "You're not authenticated!"});
         } else {
@@ -28,6 +23,7 @@ router.post("*", (req, res, next) => {
         }
     })
     .catch(function (err){
+        console.log(err);
         if(!err.status)
             res.json({type: "error", msg: "server not responding!"});
         else

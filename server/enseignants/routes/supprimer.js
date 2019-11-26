@@ -4,9 +4,9 @@ var Model = require("../DBModel");
 router.post("/remove/:id", (req, res) => {
     Model.deleteOne({_id: req.params.id}, err => {
         if(err){
-            res.send({type: "error", msg: "user not found or can not be deleted."});
+            res.json({type: "error", msg: "user not found or can not be deleted."});
         } else {
-            res.send({type: "info", msg: "user deleted."});
+            res.json({type: "info", msg: "user deleted."});
         }
     })
 });

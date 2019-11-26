@@ -2,6 +2,7 @@ var express = require("express");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var dotenv = require("dotenv");
+var cors = require("cors");
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ var auth = require("./auth");
 var app = express();
 
 app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('*', auth);

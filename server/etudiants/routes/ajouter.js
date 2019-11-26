@@ -3,17 +3,19 @@ var Model = require("../DBModel");
 
 router.post('/add', (req, res) => {
 
-    var teacher = new Model(req.body);
+    console.log(req.body);
 
-    teacher.save(err => {
+    var etudiant = new Model(req.body);
+
+    etudiant.save(err => {
         if(err) { 
             console.error(err);
-            res.send({
+            res.json({
                 type: "error",
                 msg: "Bad request."
             });
         }
-        else res.send({
+        else res.json({
             type: "info",
             msg: "user added!"
         });

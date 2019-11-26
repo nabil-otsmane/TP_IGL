@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const EnseignantSchema = new Schema({
-    login: {
-        type: String,
-        required: true
-    },
     nom: {
         type: String,
         required: true

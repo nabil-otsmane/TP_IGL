@@ -2,17 +2,11 @@ var router = require("express").Router();
 var Model = require("../DBModel");
 
 router.post("/remove/:id", (req, res) => {
-    Model.find({_id: req.params.id}, (err) => {
+    Model.deleteOne({_id: req.params.id}, err => {
         if(err){
-            console.error(err);
-            res.send({type: "error", msg: "user not found."});
-        }
-    }).deleteOne(err => {
-        if(err){
-            console.error(err);
-            res.send({type: "error", msg: "user couldn't be deleted."});
+            res.json({type: "error", msg: "user not found or can not be deleted."});
         } else {
-            res.send({type: "info", msg: "user deleted."});
+            res.json({type: "info", msg: "user deleted."});
         }
     })
 });

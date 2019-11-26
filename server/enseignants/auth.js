@@ -1,7 +1,7 @@
 var router = require("express").Router();
 var axios = require("axios");
 
-function isAuthenticated(cookie) {
+function isAuthenticated(Cookie) {
 
     return {
         then: function(e){
@@ -10,8 +10,10 @@ function isAuthenticated(cookie) {
         }
     };
 
-    return axios.post(process.env.AUTH_IP+":"+process.env.AUTH_PORT+"/isAuth", {
-        cookie
+    return axios.post("localhost:"+process.env.AUTH_PORT+"/isAuth", {
+        headers: {
+            Cookie
+        }
     }).then(res => res.json())
 }
 
@@ -20,16 +22,16 @@ router.post("*", (req, res, next) => {
     .then(json => {
         if(!json.isAuth)
         {
-            res.send({type: "error", msg: "You're not authenticated!"});
+            res.json({type: "error", msg: "You're not authenticated!"});
         } else {
             next();
         }
     })
     .catch(function (err){
         if(!err.status)
-            res.send({type: "error", msg: "server not responding!"});
+            res.json({type: "error", msg: "server not responding!"});
         else
-            res.send({type: "error", msg: "unknown error"});
+            res.json({type: "error", msg: "unknown error"});
     });
 });
 

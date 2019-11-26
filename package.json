@@ -1,0 +1,19 @@
+{
+  "name": "tp_igl",
+  "version": "1.0.0",
+  "description": "Tp pour le module d'IGL (introduction ingenieurie logiciel)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabil-otsmane/TP_IGL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabil-otsmane/TP_IGL/issues"
+  },
+  "homepage": "https://github.com/nabil-otsmane/TP_IGL#readme"
+}

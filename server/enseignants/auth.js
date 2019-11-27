@@ -4,7 +4,7 @@ var axios = require("axios");
 function isAuthenticated(cookie) {
     
     return axios.request({
-        url: "http://localhost:"+process.env.AUTH_PORT+"/isAuth",
+        url: "http://auth:"+process.env.AUTH_PORT+"/isAuth",
         method: "post",
         headers: {
             Cookie: cookie

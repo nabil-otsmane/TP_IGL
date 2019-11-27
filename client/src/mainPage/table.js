@@ -48,7 +48,7 @@ class Table extends Component {
              &&  /[1-9][0-9]{12}/.test(NSSProf.value) 
              )  
              {
-                 axios.post("http://192.168.43.185:3501/api/enseignant/add",
+                 axios.post("http://172.18.0.1:3501/api/enseignant/add",
                  {
                          nom: FamilyNameProf.value,
                          prenom: FirstNameProf.value,
@@ -78,7 +78,7 @@ class Table extends Component {
             && /[0-9]{13}/.test(MatEtudiant.value)
         )
         {
-            axios.post("http://192.168.43.185:3500/api/etudiant/add",
+            axios.post("http://172.18.0.1:3500/api/etudiant/add",
                  {
                          login : "amine@esi.dz" ,
                          nom: FamilyNameEtudiant.value,
@@ -103,34 +103,43 @@ class Table extends Component {
         this.setState({
             dataPresent: false
         });
-        axios.post("http://192.168.43.185:3501/api/"+s+"/get").then(data => {this.setState(
-            {
-                columns: Object.keys(data.data[0])
-                .filter(e => e!=="__v" && e!=="_id")
-                .map(e=>
-                    {  return {
-                        dataField : e,
-                        text: e,
-                        sort :true
-                    }}
-                ), 
-                users : Object.values(data.data).map (e=> {
-                    return {
-                        nss: e.nss,
-                        id: e._id,
-                        nom: e.nom,
-                        login: e.login,
-                        prenom: e.prenom,
-                        email: e.email,
-                        password: e.password,
-                        specialite: e.specialite,
-                    }    
-                }),
-                dataPresent:true
+        axios.post("http://172.18.0.1:3501/api/"+s+"/get").then(data => {
+		if(data.data === undefined)
+		{
+			this.setState({
+				noData: true
+			});
+			console.log("no data sent!");
+		} else {
+			this.setState(
+            		{
+                		columns: Object.keys(data.data[0])
+                		.filter(e => e!=="__v" && e!=="_id")
+                		.map(e=>
+                    		{  
+					return {
+                       				dataField : e,
+                        			text: e,
+                        			sort :true
+                    			}
+				}), 
+                		users : Object.values(data.data).map (e=> {
+                    			return {
+                        			nss: e.nss,
+                        			id: e._id,
+                        			nom: e.nom,
+                       				login: e.login,
+                        			prenom: e.prenom,
+                        			email: e.email,
+                        			password: e.password,
+                        			specialite: e.specialite,
+                    			}    
+                		}),
+                		dataPresent:true
 
-            }
-        )
-            console.log (data.data)
+            		})
+            		console.log (data.data)
+		}
         });
     }
 

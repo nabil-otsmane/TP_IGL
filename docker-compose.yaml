@@ -1,0 +1,29 @@
+version: '2'
+services:
+    mongo:
+        image: mongo
+    client:
+        container_name: tpigl_client
+        build: ./client/
+        ports:
+        - "80:80"
+        links:
+        - mongo
+        - auth
+        - enseignant
+        - etudiant
+    auth:
+        container_name: tpigl_auth
+        build: ./server/auth/
+        ports:
+        - "5000:5000"
+    enseignant:
+        container_name: tpigl_enseignant
+        build: ./server/enseignants/
+        ports:
+        - "3501:3501"
+    etudiant:
+        container_name: tpigl_etudiant
+        build: ./server/etudiants/
+        ports:
+        - "3500:3500"

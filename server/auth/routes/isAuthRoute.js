@@ -9,19 +9,25 @@ function checkJWT(cookie) {
     {
         ret = false;
     } else {
-        var decoded = jwt.verify(cookie.jwt_token, process.env.SECRET);
-        if(decoded === undefined)
-            ret = false;
+        try {
+            var decoded = jwt.verify(cookie.jwt_token, process.env.SECRET);
+            if(decoded === undefined)
+                ret = false;
 
-        if(decoded.type !== "admin")
+            if(decoded.type !== "admin")
+                ret = false;
+        }
+        catch(e) {
             ret = false;
-            
+        }    
     }
     return ret;
 }
+
+exports.check = checkJWT;
 
 router.post('/', (req, res) => {
     res.send({isAuth: checkJWT(req.cookies)});
 });
 
-module.exports = router;
+exports.router = router;

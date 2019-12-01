@@ -3,10 +3,10 @@ var jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 var Model = require("../DBModel");
 
-async function checkPassword(email, pass) {
+exports.checkPass = async function checkPassword(email, pass) {
 
 
-    let user = await (Model.findOne({ email }).exec());
+    let user = await (Model.findOne({ login: email }).exec());
 
     if(!user)
         return false;
@@ -21,7 +21,7 @@ async function checkPassword(email, pass) {
 function createJWT(type)
 {
     return jwt.sign({ type }, process.env.SECRET, { algorithm: "HS256" });
-}   
+}
 
 router.post('/', (req, res, next) => {
 
@@ -57,4 +57,4 @@ router.post('/', (req, res, next) => {
     });
 });
 
-module.exports = router;
+exports.router = router;

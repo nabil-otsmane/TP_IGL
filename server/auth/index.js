@@ -15,8 +15,8 @@ var app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-app.use('/isAuth', isAuthRouter);
-app.use('/login', loginRouter);
+app.use('/isAuth', isAuthRouter.router);
+app.use('/login', loginRouter.router);
 
 port = process.env.PORT;
 

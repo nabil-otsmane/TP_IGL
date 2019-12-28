@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nabil-otsmane/TP_IGL/issues"
   },
-  "homepage": "https://github.com/nabil-otsmane/TP_IGL#readme"
+  "homepage": "https://github.com/nabil-otsmane/TP_IGL#readme",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
 }

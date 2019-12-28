@@ -1,6 +1,7 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
+var cors = require("cors");
 var dotenv = require("dotenv");
 
 dotenv.config();
@@ -13,6 +14,7 @@ var loginRouter = require("./routes/loginRoute");
 var app = express();
 
 app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/isAuth', isAuthRouter.router);

@@ -5,12 +5,15 @@ function checkJWT(cookie) {
 
     var ret = true;
 
-    if(cookie === undefined || cookie.jwt_token === undefined)
+    if(cookie === undefined)
     {
         ret = false;
     } else {
         try {
-            var decoded = jwt.verify(cookie.jwt_token, process.env.SECRET);
+            var decoded = jwt.verify(cookie, process.env.SECRET, {
+                algorithms: ["HS256"]
+            });
+
             if(decoded === undefined)
                 ret = false;
 
@@ -27,7 +30,7 @@ function checkJWT(cookie) {
 exports.check = checkJWT;
 
 router.post('/', (req, res) => {
-    res.send({isAuth: checkJWT(req.cookies)});
+    res.json({isAuth: checkJWT(req.headers.authorization.split(' ')[1])});
 });
 
 exports.router = router;

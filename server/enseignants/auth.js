@@ -3,17 +3,22 @@ var axios = require("axios");
 
 function isAuthenticated(cookie) {
     
+    if(cookie)
+        cookie = cookie.split(' ')[1];
+
     return axios.request({
-        url: "http://auth:"+process.env.AUTH_PORT+"/isAuth",
+        url: process.env.AUTH_URL+":"+process.env.AUTH_PORT+"/isAuth",
         method: "post",
         headers: {
-            Cookie: cookie
+            Authorization: "Bearer " + cookie,
+            crossDomaine: true
         }
     });
 }
 
 router.post("*", (req, res, next) => {
-    isAuthenticated(req.headers.cookie)
+
+    isAuthenticated(req.headers.authorization)
     .then(data => {
         if(!data.data.isAuth)
         {

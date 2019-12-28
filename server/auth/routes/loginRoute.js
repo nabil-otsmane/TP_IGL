@@ -3,8 +3,10 @@ var jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 var Model = require("../DBModel");
 
-exports.checkPass = async function checkPassword(email, pass) {
+async function checkPassword(email, pass) {
 
+
+    console.log("checkPass: mail: " + email + ", pass: "+ pass );
 
     let user = await (Model.findOne({ login: email }).exec());
 
@@ -47,8 +49,7 @@ router.post('/', (req, res, next) => {
             return;
         }
 
-        res.cookie('jwt_token', createJWT(user.type));
-        res.json({type:"info", msg: "login success."});
+        res.json({type:"info", msg: "login success.", cookie: createJWT(user.type)});
     })
     .catch(err => {
         console.error(err);
@@ -58,3 +59,4 @@ router.post('/', (req, res, next) => {
 });
 
 exports.router = router;
+exports.checkPass = checkPassword;

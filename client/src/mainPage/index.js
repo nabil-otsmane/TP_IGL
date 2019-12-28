@@ -3,6 +3,9 @@ import Header from './header';
 import Table from './table';
 import SideBar from './sideBar';
 import './index.css';
+import getEnseignant from '../middleware/getEnseignant';
+import getEtudiant from '../middleware/getEtudiant';
+import { Cookies, withCookies } from 'react-cookie';
 
 class Main extends Component {
 
@@ -10,16 +13,79 @@ class Main extends Component {
         super(props);
 
         this.state = {
-            window: "enseignants"
+            window: "enseignants",
+            columns: [],
+            users: [],
+            dataPresent: false
         };
 
         this.typeChanged = this.typeChanged.bind(this);
+    }
+
+    GetEntriesBDD (s)
+    {
+        const { cookies } = this.props;
+
+        this.setState({
+            dataPresent: false
+        });
+
+        if(s === "enseignants")
+        {
+            getEnseignant(cookies.get('jwt_token'))
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    columns: Object.keys(data.msg[0]).filter(e => e !== "__v" && e !== "_id")
+                    .map(e => ({
+                        dataField: e,
+                        text: e,
+                        sort: true
+                    })).sort((a, b) => a.text > b.text),
+                    users: Object.values(data.msg)
+                    .map(e => ({
+                        id: e._id,
+                        key: e._id,
+                        nom: e.nom,
+                        nss: e.nss,
+                        prenom: e.prenom,
+                        email: e.email,
+                        password: e.password,
+                        specialite: e.specialite,
+                    })),
+                    dataPresent: true
+                })
+            })
+            .catch(err => {
+                console.log(err);
+
+                this.setState({
+                    noData: true,
+                    msg: err.msg
+                });
+            })
+        } else {
+            getEtudiant(cookies.get('jwt_token'))
+            .then(data => {
+
+            })
+            .catch(err => {
+                console.log(err.message);
+
+                this.setState({
+                    noData: true,
+                    msg: err.message
+                })
+            });
+        }
     }
 
     typeChanged(type) {
         this.setState({
             window: type
         });
+        console.log(type);
+        this.GetEntriesBDD(type);
     }
 
     render() {
@@ -31,11 +97,12 @@ class Main extends Component {
                 </div>
                 <div className="col p-4">
                     <Header type={this.state.window} />
-                    <Table type={this.state.window} />
+                    {this.state.dataPresent && 
+                        <Table type={this.state.window} columns={this.state.columns} users={this.state.users} />}
                 </div>
             </div>
         );
     }
 }
 
-export default Main;
+export default withCookies(Main);

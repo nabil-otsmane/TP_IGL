@@ -8,7 +8,7 @@ router.post("/get", (req, res) => {
             res.json({type: "error", msg: "internal error."});
         }
 
-        res.json(teachers);
+        res.json({type: "info", msg: teachers});
     });
 });
 

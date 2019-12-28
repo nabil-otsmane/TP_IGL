@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faTag, faSortAlphaDownAlt,faBook, faLock, faCalendar, faEnvelopeOpenText, faNewspaper, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faFilter, 
+    faTag, 
+    faSortAlphaDownAlt,
+    faBook, 
+    faLock, 
+    faCalendar, 
+    faEnvelopeOpenText, 
+    faNewspaper, 
+    faAddressBook 
+} from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
-import axios from 'axios'
+import axios from 'axios';
+import { enseignant, etudiant } from '../middleware/config';
+
+const config = {enseignant, etudiant};
 
 /** The main Page where the admin can see and add Ensgants and Etudiants*/
 class Table extends Component {
@@ -20,7 +33,8 @@ class Table extends Component {
       this.state = {
           dataPresent : false,
           columns : [],
-          users :[]
+          users :[],
+          type: props.type
       }
     }
      GetEmailprof ()
@@ -48,7 +62,7 @@ class Table extends Component {
              &&  /[1-9][0-9]{12}/.test(NSSProf.value) 
              )  
              {
-                 axios.post("http://172.18.0.1:3501/api/enseignant/add",
+                 axios.post(config.enseignant.url + ":" + config.enseignant.port + "/api/enseignant/add",
                  {
                          nom: FamilyNameProf.value,
                          prenom: FirstNameProf.value,
@@ -78,7 +92,7 @@ class Table extends Component {
             && /[0-9]{13}/.test(MatEtudiant.value)
         )
         {
-            axios.post("http://172.18.0.1:3500/api/etudiant/add",
+            axios.post(config.etudiant.url + "" + config.etudiant.port + "/api/etudiant/add",
                  {
                          login : "amine@esi.dz" ,
                          nom: FamilyNameEtudiant.value,
@@ -98,58 +112,7 @@ class Table extends Component {
 
     }
 
-    GetEntriesBDD (s)
-    {
-        this.setState({
-            dataPresent: false
-        });
-        axios.post("http://172.18.0.1:3501/api/"+s+"/get").then(data => {
-		if(data.data === undefined)
-		{
-			this.setState({
-				noData: true
-			});
-			console.log("no data sent!");
-		} else {
-			this.setState(
-            		{
-                		columns: Object.keys(data.data[0])
-                		.filter(e => e!=="__v" && e!=="_id")
-                		.map(e=>
-                    		{  
-					return {
-                       				dataField : e,
-                        			text: e,
-                        			sort :true
-                    			}
-				}), 
-                		users : Object.values(data.data).map (e=> {
-                    			return {
-                        			nss: e.nss,
-                        			id: e._id,
-                        			nom: e.nom,
-                       				login: e.login,
-                        			prenom: e.prenom,
-                        			email: e.email,
-                        			password: e.password,
-                        			specialite: e.specialite,
-                    			}    
-                		}),
-                		dataPresent:true
-
-            		})
-            		console.log (data.data)
-		}
-        });
-    }
-
-    componentDidMount()
-    {
-        this.GetEntriesBDD(this.props.type.slice(0,this.props.type.length-1));
-    }
-
     render() {
-
         const popEnseignant = (
              <Popover id = "popOver" >    
             <Popover.Title as="h1" >
@@ -401,18 +364,15 @@ class Table extends Component {
                             color = "#1d2a48" />
                         </button>  
                     </div>  
-                    {
-                        this.state.dataPresent  && (
-                            <div className = "text-left overflow-auto" >
-                                <BootstrapTable bootstrap4 keyField = 'id'
-                                    data = { this.state.users }
-                                    striped hover columns = { this.state.columns }
-                                    defaultSorted = { defaultSorted }
-                                    bordered = { false }
-                                    />  
-                            </div>
-                        )
-                    }
+                    <div className = "text-left overflow-auto" >
+                        <BootstrapTable bootstrap4 keyField = 'id'
+                            data = { this.props.users }
+                            striped hover columns = { this.props.columns }
+                            defaultSorted = { defaultSorted }
+                            bordered = { false }
+                        /> 
+                        
+                    </div>
                       
                     
                 </div>

@@ -5,21 +5,25 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 
-// User Model
+/**Using the admin model */
 const Admin = require('../../../models/Admin');
 
-// @route   POST api/users/admin
-// @desc    Register Admin
-// @access  Public
+/**
+ * @route POST api/users/admin
+ * @description Register Admin 
+ * @access public
+ */
+
+
 router.post('/api/users/', (req, res) => {
     const { login, password } = req.body;
 
-    // Validation
+   /**Validation before Authentication */
     if (!login || !password) {
         return res.status(400).json({ msg: 'Entrez touts les champs S.V.P' });
     }
 
-    // Verification s'il existe
+     /** Check for Exesting user in the DB */
     Admin.findOne({ login })
         .then(admin => {
             if (admin) return res.status(400).json({ msg: 'Le compte admin existe deja' });
@@ -28,7 +32,7 @@ router.post('/api/users/', (req, res) => {
                 login,
                 password
             });
-            // Creation salt & hash
+            /**Validate the Password */
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newAdmin.password, salt, (err, hash) => {
                     if (err) throw err;

@@ -1,9 +1,13 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose");     
 
-/*
- * mongoose connection
+/**
+ * Connecting to the Data Base
+ * @function
+ * @param {string} URL - The Url of the DataBase
+ * @param {ConnectionOptions} CO  - The Options how we connect to the BD
  */
-mongoose.connect(process.env.MONGO_URL, { 
+
+mongoose.connect(process.env.MONGO_URL, {   
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

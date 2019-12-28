@@ -2,21 +2,32 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 
-// Item Model
+/**
+ * Item Model
+ */
 const Enseignant = require('../../../models/Enseignant');
-
-// @route   GET api/users/enseignant
-// @desc    Get All Enseignants
-// @access  Public
+/**
+ * @function FindEnseignant
+ * @route GET api/users/enseignant
+ * @description Get all Enseignants
+ * @access public
+ */
 router.get('/', (req, res) => {
     Enseignant.find()
         .sort({ nom: -1 })
         .then(enseignant => res.json(enseignant));
 });
 
-// @route   POST api/users/enseignant
-// @desc    Create An Enseignant
-// @access  Private
+
+/**
+ * @function CreateEnseignant
+ * @route POST api/users/enseignant
+ * @description Create An Enseignant
+ * @access private
+ * @param {any} req we get from it the all the information about the Enseignant to add
+ */
+
+
 router.post('/', auth, (req, res) => {
     const newEnseignant = new Enseignant({
         login: req.body.login,
@@ -31,9 +42,17 @@ router.post('/', auth, (req, res) => {
     newItem.save().then(item => res.json(item));
 });
 
-// @route   DELETE api/items/:id
-// @desc    Delete A Item
-// @access  Private
+
+/**
+ * @function DeleteEnseignant
+ * @route DELETE api/items/:id
+ * @description Delete an item from the DB
+ * @access private
+ * @param {any} req we get from it the id of the Enseignant to delete
+ */
+
+
+
 router.delete('/:id', auth, (req, res) => {
     Item.findById(req.params.id)
         .then(item => item.remove().then(() => res.json({ success: true })))

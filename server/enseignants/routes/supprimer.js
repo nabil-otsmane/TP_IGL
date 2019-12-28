@@ -1,3 +1,7 @@
+/**
+ * @function Supprimer it allows us to delete a teacher from the DB
+ */
+
 var router = require("express").Router();
 var Model = require("../DBModel");
 

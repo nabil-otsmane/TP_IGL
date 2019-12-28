@@ -4,7 +4,8 @@
   "description": "Tp pour le module d'IGL (introduction ingenieurie logiciel)",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "",
+    "docs" : "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/nabil-otsmane/TP_IGL#readme",
   "devDependencies": {
-    "jasmine": "^3.5.0"
+    "jasmine": "^3.5.0",
+    "jsdoc": "^3.6.3"
   }
 }

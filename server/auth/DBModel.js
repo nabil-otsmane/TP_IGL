@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Create Schema
+/**
+ * Creating the Schema of the account model
+ * @constructor - The constructor of the Schema's model
+ * It has three required feild : login, password, type
+ * @exports schemaModel - We Export the Schema Model 
+ * 
+ */
 const AdminSchema = new Schema({
     login: {
         type: String,

@@ -1,6 +1,15 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
+/**
+ * @function auth it allwos to autheticate 
+ * @param {any} req it provides us the info
+ * @param {any} res 
+ * @param {any} next 
+ * it checks for tokens 
+ * and then verify them
+ * and finally add user from payload
+ */
 function auth(req, res, next) {
     const token = req.header('x-auth-token');
 

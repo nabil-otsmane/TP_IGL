@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "",
-    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
+    "dev": "concurrently \"cd server/auth && nodemon index.js\" \"cd server/enseignants && nodemon index.js\" \"cd server/etudiants && nodemon index.js\" \"cd client && npm run start\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
     "jsdoc": "^3.6.3"
   },
   "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.5"
+    "selenium-webdriver": "^4.0.0-alpha.5",
+    "concurrently": "^5.0.2"
+
   }
 }

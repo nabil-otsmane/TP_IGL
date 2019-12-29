@@ -34,7 +34,6 @@ class Main extends Component {
         {
             getEnseignant(cookies.get('jwt_token'))
             .then(data => {
-                console.log(data);
                 this.setState({
                     columns: Object.keys(data.msg[0]).filter(e => e !== "__v" && e !== "_id")
                     .map(e => ({
@@ -53,7 +52,9 @@ class Main extends Component {
                         password: e.password,
                         specialite: e.specialite,
                     })),
-                    dataPresent: true
+                    dataPresent: true,
+                    msg:"",
+                    noData: false
                 })
             })
             .catch(err => {
@@ -61,20 +62,44 @@ class Main extends Component {
 
                 this.setState({
                     noData: true,
-                    msg: err.msg
+                    msg: err.msg,
+                    dataPresent: false
                 });
             })
         } else {
             getEtudiant(cookies.get('jwt_token'))
             .then(data => {
-
+                this.setState({
+                    columns: Object.keys(data.msg[0]).filter(e => e !== "__v" && e !== "_id")
+                    .map(e => ({
+                        dataField: e,
+                        text: e,
+                        sort: true
+                    })).sort((a, b) => a.text > b.text),
+                    users: Object.values(data.msg)
+                    .map(e => ({
+                        id: e._id,
+                        key: e._id,
+                        nom: e.nom,
+                        prenom: e.prenom,
+                        email: e.email,
+                        password: e.password,
+                        groupe: e.groupe,
+                        matricule: e.matricule,
+                        date_naissance: e.date_naissance
+                    })),
+                    dataPresent: true,
+                    msg:"",
+                    noData: false
+                })
             })
             .catch(err => {
                 console.log(err.message);
 
                 this.setState({
                     noData: true,
-                    msg: err.message
+                    msg: err.message,
+                    
                 })
             });
         }
@@ -103,12 +128,7 @@ class Main extends Component {
                     <Header type={this.state.window} />
                     {this.state.dataPresent && 
                         <Table type={this.state.window} columns={this.state.columns} users={this.state.users} />}
-                    {this.state.noData && (
-                        <div>
-                            <h1>Nothing to show!</h1>
-                            <p>{this.state.msg}</p>
-                        </div>
-                    )}
+                    {this.state.noData && <Table type={this.state.window} msg={this.state.msg} />}
                 </div>
             </div>
         );

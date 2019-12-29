@@ -14,8 +14,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
-import axios from 'axios';
 import { enseignant, etudiant } from '../middleware/config';
+import { Cookies, withCookies } from 'react-cookie';
+import addEnseignant from '../middleware/addEnseignant';
+import addEtudiant from '../middleware/addEtudiant';
 
 const config = {enseignant, etudiant};
 
@@ -28,8 +30,6 @@ class Table extends Component {
       
       this.ValidateProfClicked = this.ValidateProfClicked.bind(this);
       this.ValidateEtudiantClicked= this.ValidateEtudiantClicked.bind(this);
-      this.GetEmailprof = this.GetEmailprof.bind(this);
-      this.GetPasswordprof = this.GetPasswordprof.bind(this);
       this.state = {
           dataPresent : false,
           columns : [],
@@ -37,41 +37,34 @@ class Table extends Component {
           type: props.type
       }
     }
-     GetEmailprof ()
-    {
-        var {FamilyNameProf, FirstNameProf} = this.refs;
-        var email = FamilyNameProf.value[0]+"_"+FirstNameProf.value+"@esi.dz";
-        return email;
-    }
-
-    GetPasswordprof ()
-    {
-        var {FamilyNameProf, FirstNameProf} = this.refs;
-        var password = FamilyNameProf.value[0]+"_"+FirstNameProf.value;
-        return password;
-    }
 
 
     ValidateProfClicked(e)
     {
-       // e.preventDefault();
+        const { cookies } = this.props;
+
         var {FamilyNameProf, FirstNameProf,AgeProf,NSSProf,specialiteProf} =this.refs;
         if (/[A-Za-z]{3,20}/.test(FamilyNameProf.value)
              &&  /[A-Za-z]{1,25}[A-Za-z]{1,25}?/.test(FirstNameProf.value) 
              &&  /[0-9]{2}/.test(AgeProf.value) && AgeProf.value >=20 && AgeProf.value<=50
              &&  /[1-9][0-9]{12}/.test(NSSProf.value) 
-             )  
+             )
              {
-                 axios.post(config.enseignant.url + ":" + config.enseignant.port + "/api/enseignant/add",
-                 {
-                         nom: FamilyNameProf.value,
-                         prenom: FirstNameProf.value,
-                         email: this.GetEmailprof (),
-                         password: this.GetPasswordprof (),
-                         specialite: specialiteProf.value,
-                         nss: NSSProf.value, 
-                 }
-                 ).then(data => console.log(data));
+                e.preventDefault();
+                addEnseignant(cookies.get('jwt_token'), {
+                    nom: FamilyNameProf.value,
+                    prenom: FirstNameProf.value,
+                    email: FamilyNameProf.value[0]+"_"+FirstNameProf.value+"@esi.dz",
+                    password: FamilyNameProf.value[0]+"_"+FirstNameProf.value,
+                    specialite: specialiteProf.value,
+                    nss: NSSProf.value, 
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(err => {
+                    console.log(err.message);
+                }) 
              }
         else
         {
@@ -82,6 +75,8 @@ class Table extends Component {
 
     ValidateEtudiantClicked (e)
     {
+        const { cookies } = this.props;
+
        // e.preventDefault();
         var {FamilyNameEtudiant,FirstNameEtudiant,DateNaissanceEtudiant,NiveauEtudiant,MatEtudiant}= this.refs;
         if(
@@ -92,18 +87,22 @@ class Table extends Component {
             && /[0-9]{13}/.test(MatEtudiant.value)
         )
         {
-            axios.post(config.etudiant.url + "" + config.etudiant.port + "/api/etudiant/add",
-                 {
-                         login : "amine@esi.dz" ,
-                         nom: FamilyNameEtudiant.value,
-                         prenom: FirstNameEtudiant.value,
-                         email: this.GetEmailprof (),
-                         password: this.GetPasswordprof (),
-                         groupe: NiveauEtudiant.value,
-                         matricule: MatEtudiant.value, 
-                         date_naissance: DateNaissanceEtudiant
-                 }
-                 ).then(data => console.log(data));
+
+            e.preventDefault();
+            addEtudiant(cookies.get('jwt_token'), {
+                nom: FamilyNameEtudiant.value,
+                prenom: FirstNameEtudiant.value,
+                email: FamilyNameEtudiant.value[0]+"_"+FirstNameEtudiant.value+"@esi.dz",
+                password: FamilyNameEtudiant.value[0]+"_"+FirstNameEtudiant.value,
+                groupe: NiveauEtudiant.value,
+                matricule: MatEtudiant.value, 
+                date_naissance: DateNaissanceEtudiant.value
+            })
+            .then(data => {
+                console.log(data);
+            }).catch(err => {
+                console.log(err.message);
+            })
         }
         
         else{
@@ -361,12 +360,19 @@ class Table extends Component {
                         </button>  
                     </div>  
                     <div className = "text-left overflow-auto" >
-                        <BootstrapTable bootstrap4 keyField = 'id'
-                            data = { this.props.users }
-                            striped hover columns = { this.props.columns }
-                            defaultSorted = { defaultSorted }
-                            bordered = { false }
-                        /> 
+                        {this.props.msg? (
+                            <div className="m-4">
+                                <h1>Nothing to show!</h1>
+                                <p>{this.props.msg}</p>
+                            </div>
+                        ):
+                            <BootstrapTable bootstrap4 keyField = 'id'
+                                data = { this.props.users }
+                                striped hover columns = { this.props.columns }
+                                defaultSorted = { defaultSorted }
+                                bordered = { false }
+                            /> 
+                        }
                         
                     </div>
                       
@@ -377,4 +383,4 @@ class Table extends Component {
 
 }
 
-export default Table;
+export default withCookies(Table);

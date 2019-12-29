@@ -11,9 +11,8 @@ export default (token) => {
         }
     })
     .then(data => {
-        if(typeof(data.data) === "undefined")
-            throw new Error({type: "error", msg: "No data received."});
-        
+        if(!("type" in data.data))
+            throw new Error({type: "error", msg: "No items present."});
         if(data.data.type !== "info") 
             throw new Error(data.data);
 

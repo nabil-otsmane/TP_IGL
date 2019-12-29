@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "",
-    "docs" : "./node_modules/.bin/jsdoc -c jsdoc.json"
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "devDependencies": {
     "jasmine": "^3.5.0",
     "jsdoc": "^3.6.3"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.5"
   }
 }

@@ -80,11 +80,15 @@ class Main extends Component {
         }
     }
 
+    componentDidMount() {
+        this.typeChanged("enseignants");
+    }
+
     typeChanged(type) {
         this.setState({
             window: type
         });
-        console.log(type);
+
         this.GetEntriesBDD(type);
     }
 
@@ -99,6 +103,12 @@ class Main extends Component {
                     <Header type={this.state.window} />
                     {this.state.dataPresent && 
                         <Table type={this.state.window} columns={this.state.columns} users={this.state.users} />}
+                    {this.state.noData && (
+                        <div>
+                            <h1>Nothing to show!</h1>
+                            <p>{this.state.msg}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         );

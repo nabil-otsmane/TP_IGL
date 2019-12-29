@@ -1,3 +1,8 @@
+/**
+ * 
+ * @function ajouter - It allows to add an Enseignant to our DB 
+ */
+
 var router = require("express").Router();
 var Model = require("../DBModel");
 

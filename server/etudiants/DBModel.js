@@ -1,3 +1,10 @@
+/**
+ * Creating the Schema of the Etudaint model
+ * @constructor - The constructor of the Schema's model
+ * It has these required feilds : nom,prenom, email, password, goupe,matricule, Date de Naissance
+ * @exports schemaModel - We Export the Schema Model 
+ */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

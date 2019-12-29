@@ -9,23 +9,28 @@ const auth = require('../../middleware/auth');
 // User Model
 const User = require('../../models/User');
 
-// @route   POST api/auth
-// @desc    Auth user
-// @access  Public
+/**
+ * @route POST api/auth
+ * @description Authentication of user
+ * @access public
+ * @param {any} req it gives us the infor about the username and password
+ */
+
+
 router.post('/', (req, res) => {
     const { email, password } = req.body;
 
-    // Simple validation
+    /**Validation before Authentication */
     if (!email || !password) {
         return res.status(400).json({ msg: 'Please enter all fields' });
     }
 
-    // Check for existing user
+    /** Check for Exesting user in the DB */
     User.findOne({ email })
         .then(user => {
             if (!user) return res.status(400).json({ msg: 'User Does not exist' });
 
-            // Validate password
+            /**Validate the Password */
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
@@ -48,9 +53,13 @@ router.post('/', (req, res) => {
         })
 });
 
-// @route   GET api/auth/user
-// @desc    Get user data
-// @access  Private
+/**
+ * @route GET api/auth/user
+ * @description Get User Data
+ * @access private
+ */
+
+
 router.get('/user', auth, (req, res) => {
     User.findById(req.user.id)
         .select('-password')

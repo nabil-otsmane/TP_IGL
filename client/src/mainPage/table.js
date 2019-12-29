@@ -197,9 +197,10 @@ class Table extends Component {
                     </div> 
     
                     <div className = "wrap-input100 validate-input" >
-                        <select className = "input100" ref="specialiteProf" >
+                        <select className = "input100" ref="specialiteProf" name="Module">
                             <option > Algorithmique </option> 
                             <option > Mathematique </option> 
+                            <option > IGL </option> 
                             <option > Autre </option> 
                         </select> 
                         <span className = "focus-input100" />
@@ -211,7 +212,8 @@ class Table extends Component {
                     </div> 
     
                     <button className = "login100-form-btn"
-                            onClick ={ this.ValidateProfClicked} >
+                            onClick ={ this.ValidateProfClicked}
+                            name="Validate" >
                         Validate 
                     </button>
                 </form> 
@@ -343,7 +345,7 @@ class Table extends Component {
                             overlay = {
                                 win.toUpperCase().slice(0, win.length - 1) === "ENSEIGNANT" ? popEnseignant : popEtudiant
                             }>
-                            <button className = "btn m-3 p-0 pl-2 pr-2 float-left btn-voilet" >
+                            <button className = "btn m-3 p-0 pl-2 pr-2 float-left btn-voilet" name ="AddButton" >
                                 <small> ADD { win.toUpperCase().slice(0, win.length - 1) } </small>  
                             </button>  
                         </OverlayTrigger>  

@@ -54,7 +54,7 @@ class Table extends Component {
 
     ValidateProfClicked(e)
     {
-        e.preventDefault();
+       // e.preventDefault();
         var {FamilyNameProf, FirstNameProf,AgeProf,NSSProf,specialiteProf} =this.refs;
         if (/[A-Za-z]{3,20}/.test(FamilyNameProf.value)
              &&  /[A-Za-z]{1,25}[A-Za-z]{1,25}?/.test(FirstNameProf.value) 
@@ -82,7 +82,7 @@ class Table extends Component {
 
     ValidateEtudiantClicked (e)
     {
-        e.preventDefault();
+       // e.preventDefault();
         var {FamilyNameEtudiant,FirstNameEtudiant,DateNaissanceEtudiant,NiveauEtudiant,MatEtudiant}= this.refs;
         if(
             /[A-Za-z]{3,20}/.test(FamilyNameEtudiant.value)
@@ -121,7 +121,7 @@ class Table extends Component {
             <Popover.Content >
                 <form style = {
                     { margin: "10px" } } >
-    
+                        
                     <div className = "wrap-input100 validate-input" >
                         <input className = "input100"   
                             ref="FamilyNameProf"
@@ -210,12 +210,8 @@ class Table extends Component {
                                 size = "sm" />
                         </span> 
                     </div> 
-    
-                    <button className = "login100-form-btn"
-                            onClick ={ this.ValidateProfClicked}
-                            name="Validate" >
-                        Validate 
-                    </button>
+                    <input type="submit" name="Validate" className = "login100-form-btn" onClick={this.ValidateProfClicked}>
+                    </input>
                 </form> 
             </Popover.Content> 
         </Popover>
@@ -317,10 +313,8 @@ class Table extends Component {
                     </span> 
                     </div> 
         
-                    <button className = "login100-form-btn"
-                        onClick = {this.ValidateEtudiantClicked } >
-                    Validate 
-                    </button>
+                    <input type="submit" name="Validate" className = "login100-form-btn" onClick={this.ValidateEtudiantClicked}>
+                    </input>
         
                     </form>
                 </Popover.Content> 

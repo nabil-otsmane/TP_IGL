@@ -1,6 +1,11 @@
 var webDriver = require ('selenium-webdriver') ;
 
-
+  //Pour lancer le test automatise il suffit de lancer la commande : 'node .\AjouterEnseignantTEST.js'  sur le terminal
+  //Et ceci sur un Browser Google Chrome de version 79 Seulement 
+  //pour le lancer sur une autre version vous devez d'abord telecharger le chrome driver en fonction de votre version du Chrome Actuel
+  // Puis vous ecraser le chromedriver.exe qui se trouver dans le repertoire /
+  // et finallement vous n'aurez qu'a lancer la meme commande 
+  // Sil ne se lance toujours pas Veuillez nouc contacter : hm_raiah@esi.dz  
 
 function AddEnseignant () {
     var driver = new webDriver.Builder().forBrowser('chrome').build();

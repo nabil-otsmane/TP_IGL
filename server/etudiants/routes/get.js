@@ -12,7 +12,7 @@ router.post("/get", (req, res) => {
             res.json({type: "error", msg: "internal error."});
         }
 
-        res.json(etudiants);
+        res.json({type: "info", msg: etudiants});
     });
 });
 

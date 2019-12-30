@@ -28,7 +28,8 @@ class Main extends Component {
         const { cookies } = this.props;
 
         this.setState({
-            dataPresent: false
+            dataPresent: false,
+            noData: false
         });
 
         if(s === "enseignants")
@@ -70,6 +71,7 @@ class Main extends Component {
         } else {
             getEtudiant(cookies.get('jwt_token'))
             .then(data => {
+                console.log(data.msg);
                 this.setState({
                     columns: Object.keys(data.msg[0]).filter(e => e !== "__v" && e !== "_id")
                     .map(e => ({

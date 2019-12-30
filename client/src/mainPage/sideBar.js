@@ -54,8 +54,8 @@ class SideBar extends Component {
                     </button>
                 </div>
 
-                <SideButton type="enseignant" collapsed={this.state.collapsed} selected={isEnseignant} onClick={this.setTypeEnseignants} />
-                <SideButton type="etudiant" collapsed={this.state.collapsed} selected={!isEnseignant} onClick={this.setTypeEtudiants} />
+                <SideButton type="enseignant" id="enseignant" collapsed={this.state.collapsed} selected={isEnseignant} onClick={this.setTypeEnseignants} />
+                <SideButton type="etudiant" id="etudiant" collapsed={this.state.collapsed} selected={!isEnseignant} onClick={this.setTypeEtudiants} />
             </div>
         );
     }

@@ -12,7 +12,7 @@ import {
     faNewspaper, 
     faAddressBook 
 } from '@fortawesome/free-solid-svg-icons';
-import { OverlayTrigger } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
 import { enseignant, etudiant } from '../middleware/config';
 import { Cookies, withCookies } from 'react-cookie';
@@ -27,14 +27,15 @@ class Table extends Component {
     constructor(props)
     {
       super(props);
-      
       this.ValidateProfClicked = this.ValidateProfClicked.bind(this);
       this.ValidateEtudiantClicked= this.ValidateEtudiantClicked.bind(this);
+      this.FilterEtudiantClicked = this.FilterEtudiantClicked.bind(this);
       this.state = {
           dataPresent : false,
           columns : [],
           users :[],
-          type: props.type
+          type: props.type ,
+         // IsEnseignant : false
       }
     }
 
@@ -91,7 +92,6 @@ class Table extends Component {
         )
         {
             var date = DateNaissanceEtudiant.value.substring(0,10)
-            console.log(date);
             e.preventDefault();
             addEtudiant(cookies.get('jwt_token'), {
                 nom: FamilyNameEtudiant.value,
@@ -118,6 +118,17 @@ class Table extends Component {
 
     }
 
+    FilterEtudiantClicked (e) {
+       if ( this.props.type.toUpperCase().slice(0, this.props.type.length - 1) === "ENSEIGNANT") {
+            this.setState(()=> {
+               //this.props.users = this.props.users.find((e)=>e.specialite==="IGL") ;
+               console.log(document.getElementById("Tableau")) ;
+        } 
+            )}
+        else {
+
+        }
+    }
     render() {
 
         const popEnseignant = (
@@ -350,26 +361,45 @@ class Table extends Component {
                                 <small> ADD { win.toUpperCase().slice(0, win.length - 1) } </small>  
                             </button>  
                         </OverlayTrigger>  
-                        <button className = "btn float-left mt-2" >
-                            <FontAwesomeIcon icon = { faFilter }
-                            color = "#1d2a48"
-                            size = "sm" />
-                        </button>
 
-                        <button className = "btn float-left mt-2" >
-                            <FontAwesomeIcon icon = { faTag }
-                            color = "#1d2a48"
-                            size = "sm" />
-                        </button>
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Filter { win.toUpperCase().slice(0, win.length - 1).toLowerCase() } !</Tooltip>}>
+                            <span className="d-inline-block">
+                                <button className = "btn float-left mt-2" onClick = {this.FilterEtudiantClicked} >
+                                    <FontAwesomeIcon icon = { faFilter }
+                                    color = "#1d2a48"
+                                    size = "sm" />
+                                </button>
+                            </span>
+                        </OverlayTrigger>                    
 
-                        <button className = "btn float-right m-2" >
-                            <FontAwesomeIcon icon = { faSortAlphaDownAlt }
-                            color = "#1d2a48" />
-                        </button>  
+
+                        
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">!</Tooltip>}>
+                            <span className="d-inline-block">
+                                <button className = "btn float-left mt-2" >
+                                    <FontAwesomeIcon icon = { faTag }
+                                    color = "#1d2a48"
+                                    size = "sm" />
+                                </button>
+                            </span>
+                        </OverlayTrigger> 
+
+
+                        
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled"> Sort { win.toUpperCase().slice(0, win.length - 1).toLowerCase() } !</Tooltip>}>
+                            <span className="d-inline-block">
+                                <button className = "btn float-right m-2" >
+                                    <FontAwesomeIcon icon = { faSortAlphaDownAlt }
+                                    color = "#1d2a48" />
+                                </button>  
+                            </span>
+                        </OverlayTrigger> 
+                        
+                        
                     </div>  
                     <div className = "text-left overflow-auto" >
                         {typeof(this.props.msg) === "undefined"? (
-                            <BootstrapTable bootstrap4 keyField = 'id'
+                            <BootstrapTable bootstrap4 keyField = 'id' id="Tableau"
                                 data = { this.props.users }
                                 striped hover columns = { this.props.columns }
                                 defaultSorted = { defaultSorted }

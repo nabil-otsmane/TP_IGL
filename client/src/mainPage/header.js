@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCog, faBell, faSignOutAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { withCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function Header (props) {
 
@@ -29,21 +30,37 @@ function Header (props) {
                 
             </form>
             <div className="row">
-                <div className="col">
-                    <button className="btn">
-                        <FontAwesomeIcon icon={faBell} color="#1d2a48" />
-                    </button>
-                </div>
-                <div className="col">
-                    <button className="btn">
-                        <FontAwesomeIcon icon={faUserCog} color="#1d2a48" />
-                    </button>
-                </div>
-                <div className="col">
-                    <button className="btn" onClick={logout}>
-                        <FontAwesomeIcon icon={faSignOutAlt} color="#1d2a48" />
-                    </button>
-                </div>
+                
+                
+                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Notifications !</Tooltip>}>
+                    <span className="d-inline-block">
+                        <div className="col">
+                            <button className="btn">
+                                <FontAwesomeIcon icon={faBell} color="#1d2a48" />
+                            </button>
+                        </div>
+                    </span>
+                </OverlayTrigger>                
+
+                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Settings !</Tooltip>}>
+                    <span className="d-inline-block">
+                        <div className="col">
+                            <button className="btn">
+                                <FontAwesomeIcon icon={faUserCog} color="#1d2a48" />
+                            </button>
+                        </div>
+                    </span>
+                </OverlayTrigger>
+
+                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Log Out !</Tooltip>}>
+                    <span className="d-inline-block">
+                        <div className="col">
+                            <button className="btn" onClick={logout}>
+                                <FontAwesomeIcon icon={faSignOutAlt} color="#1d2a48" />
+                            </button>
+                        </div>
+                    </span>
+                </OverlayTrigger>
             </div>
         </nav>
     );

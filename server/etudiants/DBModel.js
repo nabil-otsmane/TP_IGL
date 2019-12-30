@@ -36,7 +36,7 @@ const EtudiantSchema = new Schema({
         required: true
     },
     date_naissance: {
-        type: Date,
+        type: String,
         default: Date.now
     },
 });

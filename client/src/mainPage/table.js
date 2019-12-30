@@ -64,7 +64,10 @@ class Table extends Component {
                 })
                 .catch(err => {
                     console.log(err.message);
-                }) 
+                })  ;
+                var btn = document.getElementById("AddButton");
+                btn.click();
+                document.location.reload(true);
              }
         else
         {
@@ -87,7 +90,8 @@ class Table extends Component {
             && /[0-9]{13}/.test(MatEtudiant.value)
         )
         {
-
+            var date = DateNaissanceEtudiant.value.substring(0,10)
+            console.log(date);
             e.preventDefault();
             addEtudiant(cookies.get('jwt_token'), {
                 nom: FamilyNameEtudiant.value,
@@ -96,13 +100,16 @@ class Table extends Component {
                 password: FamilyNameEtudiant.value[0]+"_"+FirstNameEtudiant.value,
                 groupe: NiveauEtudiant.value,
                 matricule: MatEtudiant.value, 
-                date_naissance: DateNaissanceEtudiant.value
+                date_naissance: date
             })
             .then(data => {
                 console.log(data);
             }).catch(err => {
                 console.log(err.message);
-            })
+            });
+            var btn = document.getElementById("AddButton");
+            btn.click();
+            document.location.reload(true);
         }
         
         else{
@@ -210,7 +217,7 @@ class Table extends Component {
                                 size = "sm" />
                         </span> 
                     </div> 
-                    <input type="submit" name="Validate" className = "login100-form-btn" onClick={this.ValidateProfClicked}>
+                    <input type="submit" name="Validate" id="Validate" className = "login100-form-btn" onClick={this.ValidateProfClicked}>
                     </input>
                 </form> 
             </Popover.Content> 
@@ -339,7 +346,7 @@ class Table extends Component {
                             overlay = {
                                 win.toUpperCase().slice(0, win.length - 1) === "ENSEIGNANT" ? popEnseignant : popEtudiant
                             }>
-                            <button className = "btn m-3 p-0 pl-2 pr-2 float-left btn-voilet" name ="AddButton" >
+                            <button className = "btn m-3 p-0 pl-2 pr-2 float-left btn-voilet" name ="AddButton" id="AddButton" >
                                 <small> ADD { win.toUpperCase().slice(0, win.length - 1) } </small>  
                             </button>  
                         </OverlayTrigger>  

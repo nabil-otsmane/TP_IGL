@@ -16,7 +16,8 @@ class Main extends Component {
             window: "enseignants",
             columns: [],
             users: [],
-            dataPresent: false
+            dataPresent: false,
+            msg: "nothing"
         };
 
         this.typeChanged = this.typeChanged.bind(this);
@@ -62,7 +63,7 @@ class Main extends Component {
 
                 this.setState({
                     noData: true,
-                    msg: err.msg,
+                    msg: err.message,
                     dataPresent: false
                 });
             })
@@ -99,7 +100,7 @@ class Main extends Component {
                 this.setState({
                     noData: true,
                     msg: err.message,
-                    
+                    dataPresent: false,
                 })
             });
         }

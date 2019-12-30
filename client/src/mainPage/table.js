@@ -112,6 +112,7 @@ class Table extends Component {
     }
 
     render() {
+
         const popEnseignant = (
              <Popover id = "popOver" >    
             <Popover.Title as="h1" >
@@ -360,18 +361,19 @@ class Table extends Component {
                         </button>  
                     </div>  
                     <div className = "text-left overflow-auto" >
-                        {this.props.msg? (
-                            <div className="m-4">
-                                <h1>Nothing to show!</h1>
-                                <p>{this.props.msg}</p>
-                            </div>
-                        ):
+                        {typeof(this.props.msg) === "undefined"? (
                             <BootstrapTable bootstrap4 keyField = 'id'
                                 data = { this.props.users }
                                 striped hover columns = { this.props.columns }
                                 defaultSorted = { defaultSorted }
                                 bordered = { false }
                             /> 
+                            
+                        ):
+                            <div className="m-4">
+                                <h1>Nothing to show!</h1>
+                                <p>{this.props.msg}</p>
+                            </div>
                         }
                         
                     </div>

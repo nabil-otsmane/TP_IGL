@@ -12,12 +12,12 @@ export default (token) => {
     })
     .then(data => {
         if(!("type" in data.data))
-            throw new Error({type: "error", msg: "No items present."});
+            throw new Error("No items present.");
         if(data.data.type !== "info") 
-            throw new Error(data.data);
+            throw new Error(data.data.msg);
 
         if(data.data.msg.length === 0)
-            throw new Error({type: "error", msg: "No items present."});
+            throw new Error("No items present.");
 
         return data.data;
         

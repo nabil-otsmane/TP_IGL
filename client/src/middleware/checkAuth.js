@@ -9,5 +9,10 @@ export default (token) => {
             Authorization: "Bearer " + token,
             crossDomaine: true
         },
+    }).then((data) => {
+        if(!("isAuth" in data.data))
+            throw new Error("Internal Error.");
+
+        return data.data.isAuth;
     });
 };

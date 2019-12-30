@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
+import {
+  Redirect
+} from 'react-router-dom';
 import logo from './images/img.png';
 import './LoginPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import {Media} from 'react-bootstrap';
 import login from './middleware/login';
-import { Cookies, withCookies } from 'react-cookie';
+import checkAuth from './middleware/checkAuth';
+import { withCookies } from 'react-cookie';
 
 /**  return all of the login page and works with the login back which verify if the account exits or not */
 class LoginPage extends Component{ 
+
 
   constructor(props) {
     super(props);
@@ -16,8 +21,20 @@ class LoginPage extends Component{
     this.state = {
       errorMsg: "",
       user: "",
-      pass: ""
+      pass: "",
+      isLogged: false
     };
+  }
+
+  componentDidMount() {
+    const { cookies } = this.props;
+
+    checkAuth(cookies.get("jwt_token"))
+    .then(isAuth => {
+      this.setState({
+        isLogged: isAuth
+      });
+    })
   }
 
   onSubmit(e){
@@ -36,7 +53,7 @@ class LoginPage extends Component{
       } else if(data.data.type === "info") {
         cookies.set("jwt_token", data.data.cookie)
         this.setState({
-          errorMsg: ""
+          isLogged: true
         })
       } else {
         this.setState({
@@ -48,7 +65,15 @@ class LoginPage extends Component{
   }
 
   render(){
-    return(
+    const {isLogged} = this.state;
+    return isLogged? (
+        <Redirect
+            to={{
+              pathname: "/",
+              state: { from: "/" }
+            }}
+          />
+      ):(
         <div className= "limiter">
           <div className="container-login100">
             <div className="wrap-login100">
@@ -98,7 +123,7 @@ class LoginPage extends Component{
             </div>
           </div>
         </div>
-    );
+      )
   }
 }
 

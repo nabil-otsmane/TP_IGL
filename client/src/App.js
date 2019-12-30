@@ -8,6 +8,11 @@ import checkAuth from './middleware/checkAuth';
 import { Cookies, withCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 class App extends Component {
 
@@ -28,25 +33,46 @@ class App extends Component {
 
     const { cookies } = this.props;
 
-    checkAuth(cookies.get("jwt_token")).then(data => {
-      console.log(data);
+    checkAuth(cookies.get("jwt_token")).then(isAuth => {
       this.setState({
-        loggedIn: data.data.isAuth || false,
+        loggedIn: isAuth,
+        loading: false
+      })
+    })
+    .catch(err => {
+      console.log(err.message);
+      this.setState({
+        loggedIn: false,
         loading: false
       })
     });
   }
 
   render(){
+    console.log(`logged: ${this.state.loggedIn}, loading: ${this.state.loading}`);
     return (
-      <div className ="App" >
-        {this.state.loading? 
-          <FontAwesomeIcon icon={faSpinner} />:
-          this.state.loggedIn?
-          <Main />:
-          <LoginPage />
-        }
-      </div>
+        <div className ="App" >
+        
+          <Switch>
+          <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/">
+              {this.state.loading? <FontAwesomeIcon icon={faSpinner} />: (
+                this.state.loggedIn ? (
+                  <Main />
+                ): ( 
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                      state: { from: "/" }
+                    }}
+                  />
+                ))
+              }
+            </Route>
+          </Switch>
+        </div>
     );
   }
 }

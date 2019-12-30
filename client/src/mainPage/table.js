@@ -90,7 +90,8 @@ class Table extends Component {
             && /[0-9]{13}/.test(MatEtudiant.value)
         )
         {
-
+            var date = DateNaissanceEtudiant.value.substring(0,10)
+            console.log(date);
             e.preventDefault();
             addEtudiant(cookies.get('jwt_token'), {
                 nom: FamilyNameEtudiant.value,
@@ -99,7 +100,7 @@ class Table extends Component {
                 password: FamilyNameEtudiant.value[0]+"_"+FirstNameEtudiant.value,
                 groupe: NiveauEtudiant.value,
                 matricule: MatEtudiant.value, 
-                date_naissance: DateNaissanceEtudiant.value
+                date_naissance: date
             })
             .then(data => {
                 console.log(data);

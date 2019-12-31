@@ -14,12 +14,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
-import { enseignant, etudiant } from '../middleware/config';
-import { Cookies, withCookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 import addEnseignant from '../middleware/addEnseignant';
 import addEtudiant from '../middleware/addEtudiant';
-
-const config = {enseignant, etudiant};
 
 /** The main Page where the admin can see and add Ensgants and Etudiants*/
 class Table extends Component {

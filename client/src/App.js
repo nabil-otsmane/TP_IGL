@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   render(){
-    console.log(`logged: ${this.state.loggedIn}, loading: ${this.state.loading}`);
+    
     return (
         <div className ="App" >
         

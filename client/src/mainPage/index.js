@@ -5,7 +5,7 @@ import SideBar from './sideBar';
 import './index.css';
 import getEnseignant from '../middleware/getEnseignant';
 import getEtudiant from '../middleware/getEtudiant';
-import { Cookies, withCookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 
 class Main extends Component {
 

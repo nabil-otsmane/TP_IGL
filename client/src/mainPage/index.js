@@ -104,6 +104,8 @@ class Main extends Component {
                     dataPresent: false,
                 })
             });
+             document.getElementById("etudiant").click();
+            
         }
     }
 

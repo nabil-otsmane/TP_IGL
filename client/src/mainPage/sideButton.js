@@ -19,7 +19,7 @@ class SideButton extends Component {
         return (
             <div className="d-flex">
                 <button className={"btn w-100 align-items-center p-0 position-relative" + (selected?" btnSelected":"")} 
-                style={style} onClick={this.props.onClick}>
+                style={style} onClick={this.props.onClick} id={type}>
                     <div className={"bar" + (selected?"":" d-none")}></div>
                     <div className="d-flex align-items-center">
                         <div className="pl-3 pr-3 pt-2 pb-2">

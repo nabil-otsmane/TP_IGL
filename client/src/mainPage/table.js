@@ -117,7 +117,7 @@ class Table extends Component {
         else{
             console.log(DateNaissanceEtudiant.value);
         }
-
+        document.getElementById("etudiant").click();
     }
 
     FilterEnseignantClicked (e) {
@@ -136,8 +136,9 @@ class Table extends Component {
     FiltrerEtudiantClicked (e) {
            var group = document.getElementById("FiltrerEtudiantGroup");
            this.setState(()=> {
-            this.props.index.GetEntriesBDD(this.props.type,group)
-        })
+           this.props.index.GetEntriesBDD(this.props.type,group);
+        }).then(()=>document.getElementById("etudiant").click() )
+        
     }
     
 

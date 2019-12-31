@@ -107,7 +107,7 @@ class LoginPage extends Component{
                 </div>
              
                 <div className="container-login100-form-btn" >                                         
-                  <button className="login100-form-btn" variant="outline-secondary">Login</button>
+                  <button className="login100-form-btn" variant="outline-secondary" name="Login">Login</button>
                 </div>
                   
                 <div className="pt-2">

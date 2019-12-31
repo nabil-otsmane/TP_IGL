@@ -11,29 +11,43 @@ function AddEnseignant () {
     var driver = new webDriver.Builder().forBrowser('chrome').build();
     var timeOuts = 1000;  //Represente le temps d'attente entre deux instructions
     driver.get('localhost:3000').then(function (){
-        driver.findElement(webDriver.By.name('AddButton')).click().then(driver.sleep(timeOuts).then (()=> {
-            driver.findElement(webDriver.By.name('familyNameProf')).sendKeys("Batata").then(driver.sleep(timeOuts).then(()=> {
-                driver.findElement(webDriver.By.name('firstNameProf')).sendKeys("Sofiane").then(driver.sleep(timeOuts).then(()=> {
-                   driver.findElement(webDriver.By.name('Validate')).click().then(driver.sleep(timeOuts).then(()=> {
-                    driver.findElement(webDriver.By.name('ageProf')).sendKeys("0").then(driver.sleep(5*timeOuts).then(()=> {
-                        driver.findElement(webDriver.By.name('ageProf')).sendKeys("35").then(driver.sleep(timeOuts).then(()=> {
-                            driver.findElement(webDriver.By.name('NSSProf')).sendKeys("9547823106541").then(driver.sleep(timeOuts).then(()=> {
-                                driver.findElement(webDriver.By.name('Module')).sendKeys("IGL").then(driver.sleep(timeOuts).then(()=> {
-                                        driver.findElement(webDriver.By.name('Validate')).click().then(driver.sleep(timeOuts).then(()=>{
-                                            setTimeout(() => {
-                                                console.log("The Enseignant has been Added");
-                                                driver.quit();
-                                            }, 4000);
-                                        })
-                                  )})
-                              )})
-                             )})
-                        )})
-                    )})
-                )})
-            )})
-        )}) 
-    )})
+        driver.findElement(webDriver.By.name('email')).sendKeys("hm_raiah@esi.dz").then(()=> {driver.sleep(1000).then(()=>{
+            driver.findElement(webDriver.By.name('pass')).sendKeys("amine123").then(()=> {
+                driver.findElement(webDriver.By.name('Login')).click().then(()=>{
+                    driver.sleep(4000).then(()=> {
+                        driver.navigate().refresh().then(()=> {
+                            driver.sleep(2000).then(()=> {
+                                driver.findElement(webDriver.By.name('AddButton')).click().then(driver.sleep(timeOuts).then (()=> {
+                                    driver.findElement(webDriver.By.name('familyNameProf')).sendKeys("Batata").then(driver.sleep(timeOuts).then(()=> {
+                                        driver.findElement(webDriver.By.name('firstNameProf')).sendKeys("Sofiane").then(driver.sleep(timeOuts).then(()=> {
+                                           driver.findElement(webDriver.By.name('Validate')).click().then(driver.sleep(timeOuts).then(()=> {
+                                            driver.findElement(webDriver.By.name('ageProf')).sendKeys("0").then(driver.sleep(5*timeOuts).then(()=> {
+                                                driver.findElement(webDriver.By.name('ageProf')).sendKeys("35").then(driver.sleep(timeOuts).then(()=> {
+                                                    driver.findElement(webDriver.By.name('NSSProf')).sendKeys("9547823106541").then(driver.sleep(timeOuts).then(()=> {
+                                                        driver.findElement(webDriver.By.name('Module')).sendKeys("IGL").then(driver.sleep(timeOuts).then(()=> {
+                                                                driver.findElement(webDriver.By.name('Validate')).click().then(driver.sleep(timeOuts).then(()=>{
+                                                                    setTimeout(() => {
+                                                                        console.log("The Enseignant has been Added");
+                                                                        driver.quit();
+                                                                    }, 6000);
+                                                                })
+                                                          )})
+                                                      )})
+                                                     )})
+                                                )})
+                                            )})
+                                        )})
+                                    )})
+                                )}) 
+                            )})
+                        })
+                    })
+                })
+            })
+        })})    
+    })
 }
 
 AddEnseignant();
+
+    

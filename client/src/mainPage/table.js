@@ -10,7 +10,8 @@ import {
     faCalendar, 
     faEnvelopeOpenText, 
     faNewspaper, 
-    faAddressBook 
+    faAddressBook,
+    faWindowClose
 } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
@@ -29,13 +30,14 @@ class Table extends Component {
       super(props);
       this.ValidateProfClicked = this.ValidateProfClicked.bind(this);
       this.ValidateEtudiantClicked= this.ValidateEtudiantClicked.bind(this);
-      this.FilterEtudiantClicked = this.FilterEtudiantClicked.bind(this);
+      this.FilterEnseignantClicked = this.FilterEnseignantClicked.bind(this);
+      this.FiltrerEtudiantClicked = this.FiltrerEtudiantClicked.bind(this);
       this.state = {
           dataPresent : false,
           columns : [],
           users :[],
+          index : {},
           type: props.type ,
-         // IsEnseignant : false
       }
     }
 
@@ -118,17 +120,27 @@ class Table extends Component {
 
     }
 
-    FilterEtudiantClicked (e) {
+    FilterEnseignantClicked (e) {
        if ( this.props.type.toUpperCase().slice(0, this.props.type.length - 1) === "ENSEIGNANT") {
+           var value = document.getElementById("ModuleFiltrerEnseignant").value;
+           value==="Sans Filtre" ? value =" " : value=value;
             this.setState(()=> {
-               //this.props.users = this.props.users.find((e)=>e.specialite==="IGL") ;
-               console.log(document.getElementById("Tableau")) ;
+              this.props.index.GetEntriesBDD(this.props.type,value)
         } 
             )}
         else {
 
         }
     }
+
+    FiltrerEtudiantClicked (e) {
+           var group = document.getElementById("FiltrerEtudiantGroup");
+           this.setState(()=> {
+            this.props.index.GetEntriesBDD(this.props.type,group)
+        })
+    }
+    
+
     render() {
 
         const popEnseignant = (
@@ -338,6 +350,55 @@ class Table extends Component {
                 </Popover.Content> 
             </Popover>
             );
+            
+            const FilterEnseignant = (
+                <Popover id ="FiltreEnseignant">
+                    <Popover.Title> 
+                        Please Select the speciality
+                    </Popover.Title>
+                    <Popover.Content >
+                        <div className = "wrap-input100 validate-input" >
+                            <select className = "input100" id="ModuleFiltrerEnseignant" value={this.s} height="1000" onChange={(e)=> this.FilterEnseignantClicked(e)}>
+                                <option >  </option> 
+                                <option > Sans Filtre </option> 
+                                <option > Algorithmique </option> 
+                                <option > Mathematique </option> 
+                                <option > IGL </option> 
+                                <option > Autre </option> 
+                            </select>
+                        </div>
+                    </Popover.Content>
+                </Popover>
+                 );
+
+            const FilterEtudiant = (
+                <Popover id ="FiltreEnseignant">
+                    <Popover.Title> 
+                        Please Select the group
+                    </Popover.Title>
+                    <Popover.Content >
+                        <form>
+                        <div className = "wrap-input100 validate-input" >
+                            <input className = "input100"
+                            type = "text"
+                            id = "FiltrerEtudiantGroup"
+                            placeholder = "Group"
+                            maxLength = "4"
+                            pattern = "[1-3]CP?S?\d"
+                            title = "Give a valid group. Exemple : 2CP2 / 1CS5 "
+                            required />
+                            <span className = "focus-input100" />
+                            <span className = "symbol-input100" >
+                            <FontAwesomeIcon icon = { faAddressBook }
+                            color = "#1d2a48"
+                            size = "sm" />
+                            </span> 
+                        </div> 
+                        <input type="submit" name="Validate" className = "login100-form-btn" onClick={this.FilterEtudiantClicked}></input>
+                        </form>
+                    </Popover.Content>
+                </Popover>
+            );
 
             const defaultSorted = [{
                 dataField: 'id',
@@ -362,9 +423,11 @@ class Table extends Component {
                             </button>  
                         </OverlayTrigger>  
 
-                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Filter { win.toUpperCase().slice(0, win.length - 1).toLowerCase() } !</Tooltip>}>
+                        <OverlayTrigger trigger="click"
+                        placement="right"
+                            overlay={win.toUpperCase().slice(0, win.length - 1) === "ENSEIGNANT" ? FilterEnseignant : FilterEtudiant} >
                             <span className="d-inline-block">
-                                <button className = "btn float-left mt-2" onClick = {this.FilterEtudiantClicked} >
+                                <button className = "btn float-left mt-2" >
                                     <FontAwesomeIcon icon = { faFilter }
                                     color = "#1d2a48"
                                     size = "sm" />

@@ -23,7 +23,7 @@ class Main extends Component {
         this.typeChanged = this.typeChanged.bind(this);
     }
 
-    GetEntriesBDD (s)
+    GetEntriesBDD (s,critere)
     {
         const { cookies } = this.props;
 
@@ -43,7 +43,7 @@ class Main extends Component {
                         text: e,
                         sort: true
                     })).sort((a, b) => a.text > b.text),
-                    users: Object.values(data.msg)
+                    users: Object.values(data.msg).filter (critere ===" " ? ()=>{return true} :(e)=>e.specialite===critere)
                     .map(e => ({
                         id: e._id,
                         key: e._id,
@@ -67,11 +67,10 @@ class Main extends Component {
                     msg: err.message,
                     dataPresent: false
                 });
-            })
+            });
         } else {
             getEtudiant(cookies.get('jwt_token'))
             .then(data => {
-                console.log(data.msg);
                 this.setState({
                     columns: Object.keys(data.msg[0]).filter(e => e !== "__v" && e !== "_id")
                     .map(e => ({
@@ -79,7 +78,7 @@ class Main extends Component {
                         text: e,
                         sort: true
                     })).sort((a, b) => a.text > b.text),
-                    users: Object.values(data.msg)
+                    users: Object.values(data.msg).filter(critere===" "? ()=>{return true} : (e) => e.groupe===critere)
                     .map(e => ({
                         id: e._id,
                         key: e._id,
@@ -117,7 +116,7 @@ class Main extends Component {
             window: type
         });
 
-        this.GetEntriesBDD(type);
+        this.GetEntriesBDD(type," ");
     }
 
     render() {
@@ -130,7 +129,7 @@ class Main extends Component {
                 <div className="col p-4">
                     <Header type={this.state.window} />
                     {this.state.dataPresent && 
-                        <Table type={this.state.window} columns={this.state.columns} users={this.state.users} />}
+                        <Table type={this.state.window} columns={this.state.columns} users={this.state.users} index ={this} />}
                     {this.state.noData && <Table type={this.state.window} msg={this.state.msg} />}
                 </div>
             </div>

@@ -6,3 +6,5 @@ et meme les filtrer.
 
 Pour lancer le programme vous devez vous posittioner d'abord dans le dossier ou se trouve le code puis lancer la commande "npm run dev"
 Pour lancer le test automatique a laide de sellenium, lancer la commande "node AjouterEnseignantTEST.js"
+
+Pour plus d'information Veuillez nous contacter : hm_raiah@esi.dz   hn_otsmane@esi.dz

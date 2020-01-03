@@ -11,7 +11,6 @@ import {
     faEnvelopeOpenText, 
     faNewspaper, 
     faAddressBook,
-    faWindowClose
 } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Popover } from 'react-bootstrap';
@@ -120,11 +119,9 @@ class Table extends Component {
     FilterEnseignantClicked (e) {
        if ( this.props.type.toUpperCase().slice(0, this.props.type.length - 1) === "ENSEIGNANT") {
            var value = document.getElementById("ModuleFiltrerEnseignant").value;
-           value==="Sans Filtre" ? value =" " : value=value;
-            this.setState(()=> {
-              this.props.index.GetEntriesBDD(this.props.type,value)
-        } 
-            )}
+           if(value==="Sans Filtre") value =" ";
+            this.props.index.GetEntriesBDD(this.props.type,value);
+       }
         else {
 
         }

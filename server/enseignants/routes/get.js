@@ -1,12 +1,12 @@
-/**
- * @function get it allows to find some teachers from to DB in order to Delete or to do Smthing with
- * 
- */
-
 var router = require("express").Router();
 var Model = require("../DBModel");
 
-router.post("/get", (req, res) => {
+/**
+ * @function get it allows to find all teachers from DB for more processing
+ * 
+ */
+function get(req, res) {
+
     Model.find((err, teachers) => {
         if(err){
             console.error(err);
@@ -15,7 +15,9 @@ router.post("/get", (req, res) => {
 
         res.json({type: "info", msg: teachers});
     });
-});
+}
+
+router.post("/get", get);
 
 
-module.exports = router;
+module.exports = {router, get};

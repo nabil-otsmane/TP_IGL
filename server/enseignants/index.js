@@ -19,10 +19,8 @@ app.use(bodyParser.json());
 app.use('*', auth);
 
 Object.values(routes).forEach(element => {
-    app.use('/api/', element);
+    app.use('/api/', element.router);
 });
-
-
 
 var port = process.env.PORT || 3000;
 

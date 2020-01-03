@@ -1,19 +1,18 @@
+var router = require("express").Router();
+var Model = require("../DBModel");
+
 /**
  * 
  * @function ajouter - It allows to add an Etudiant to our DB 
  */
-var router = require("express").Router();
-var Model = require("../DBModel");
+function ajouter(req, res) {
 
-router.post('/add', (req, res) => {
-
-    console.log(req.body);
+    //console.log(req.body);
 
     var etudiant = new Model(req.body);
 
     etudiant.save(err => {
         if(err) { 
-            console.error(err);
             res.json({
                 type: "error",
                 msg: "Bad request."
@@ -25,6 +24,8 @@ router.post('/add', (req, res) => {
         });
     });
 
-});
+}
 
-module.exports = router;
+router.post('/add', ajouter);
+
+module.exports = {router, ajouter};

@@ -23,7 +23,8 @@
     "jsdoc": "^3.6.3"
   },
   "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.5",
-    "concurrently": "^5.0.2"
+    "concurrently": "^5.0.2",
+    "minimist": "^1.2.5",
+    "selenium-webdriver": "^4.0.0-alpha.5"
   }
 }
